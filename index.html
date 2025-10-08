@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="practiceForm">
+        <div>
+            <label for="skillId">Skill ID:</label>
+            <input type="text" id="skillId" name="skill" required>
+        </div>
+
+        <div>
+            <label for="contentArea">Content Area:</label>
+            <select id="contentArea" name="contentArea" required>
+                <option value="math">math</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="chrome">Chrome:</label>
+            <select id="chrome" name="chrome" required>
+                <option value="next">next</option>
+                <option value="chromeless">chromeless</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="numQuestions">Number of Questions:</label>
+            <input type="number" id="numQuestions" name="numQuestions" min="1" max="10" required>
+        </div>
+
+        <button type="submit">Start Practice</button>
+    </form>
+
+    <script>
+        document.getElementById('practiceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let baseUrl = localStorage.getItem('baseUrl');
+            if (!baseUrl) {
+                alert('Base URL not found in local storage. Please set it first.');
+                return;
+            }
+
+            // Remove trailing slash if present
+            baseUrl = baseUrl.replace(/\/$/, '');
+
+            const skill = document.getElementById('skillId').value;
+            const contentArea = document.getElementById('contentArea').value;
+            const chrome = document.getElementById('chrome').value;
+            const numQuestions = document.getElementById('numQuestions').value;
+            const returnTo = window.location.href;
+
+            const url = `${baseUrl}/practice?skill=${encodeURIComponent(skill)}&contentArea=${encodeURIComponent(contentArea)}&chrome=${encodeURIComponent(chrome)}&returnTo=${encodeURIComponent(returnTo)}&numQuestions=${encodeURIComponent(numQuestions)}`;
+
+            window.location.href = url;
+        });
+    </script>
+</body>
+</html>
