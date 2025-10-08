@@ -6,6 +6,8 @@
     <title>Document</title>
 </head>
 <body>
+    <h1 id="resultsMessage" style="display: none;"></h1>
+
     <form id="practiceForm">
         <div>
             <label for="skillId">Skill ID:</label>
@@ -36,6 +38,19 @@
     </form>
 
     <script>
+        // Check for results in URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const duration = urlParams.get('duration');
+        const numCorrect = urlParams.get('numCorrect');
+
+        if (duration && numCorrect) {
+            // Show results message and hide form
+            document.getElementById('resultsMessage').textContent =
+                `Student got ${numCorrect} correct, and practiced for ${duration} seconds!`;
+            document.getElementById('resultsMessage').style.display = 'block';
+            document.getElementById('practiceForm').style.display = 'none';
+        }
+
         document.getElementById('practiceForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
